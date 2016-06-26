@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_gift"
+        android:icon="@mipmap/ic_action_gift"
+        android:title="@string/action_gift"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_github"
+        android:icon="@mipmap/ic_action_github"
+        android:title="@string/action_github"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_rating"
+        android:title="@string/action_rating" />
+    <item
+        android:id="@+id/action_more_app"
+        android:title="@string/title_activity_more_app" />
+</menu>

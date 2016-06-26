@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="holo_orange_dark">#ffff8800</color>
+    <color name="main_color">#9933cc</color>
+    <color name="loading_color_blue">#33B5E5</color>
+    <color name="loading_color_red">#FF4444</color>
+    <color name="loading_color_green">#99CC00</color>
+    <color name="loading_color_yello">#FFBB33</color>
 </resources>

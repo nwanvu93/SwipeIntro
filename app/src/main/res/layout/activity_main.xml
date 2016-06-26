@@ -1,85 +1,84 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ebebeb">
+    android:fitsSystemWindows="true"
+    tools:context="com.nwanvu.example.objectanimator.MainActivity">
 
-    <include layout="@layout/view_tutorial_man_4" />
-
-    <include layout="@layout/view_tutorial_man_3" />
-
-    <include layout="@layout/view_tutorial_man_2" />
-
-    <include layout="@layout/view_tutorial_man_1" />
-
-    <View
-        android:id="@+id/touchView"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="0dp" />
+        android:background="#ebebeb">
 
-    <RadioGroup
-        android:id="@+id/cbIndicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="20dp"
-        android:checkedButton="@+id/cb_w1"
-        android:clickable="false"
-        android:orientation="horizontal">
+        <include layout="@layout/view_tutorial_man_4" />
 
-        <RadioButton
-            android:id="@+id/cb_w1"
-            android:layout_width="8dp"
-            android:layout_height="8dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/tutorial_indicator"
-            android:button="@null"
-            android:clickable="false" />
+        <include layout="@layout/view_tutorial_man_3" />
 
-        <RadioButton
-            android:id="@+id/cb_w2"
-            android:layout_width="8dp"
-            android:layout_height="8dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/tutorial_indicator"
-            android:button="@null"
-            android:clickable="false" />
+        <include layout="@layout/view_tutorial_man_2" />
 
-        <RadioButton
-            android:id="@+id/cb_w3"
-            android:layout_width="8dp"
-            android:layout_height="8dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/tutorial_indicator"
-            android:button="@null"
-            android:clickable="false" />
+        <include layout="@layout/view_tutorial_man_1" />
 
-        <RadioButton
-            android:id="@+id/cb_w4"
-            android:layout_width="8dp"
-            android:layout_height="8dp"
-            android:background="@drawable/tutorial_indicator"
-            android:button="@null"
-            android:clickable="false" />
-    </RadioGroup>
+        <View
+            android:id="@+id/touchView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="0dp" />
 
-    <Button
-        android:id="@+id/btnPlay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="10dp"
-        android:text="play"
-        android:visibility="gone" />
+        <RadioGroup
+            android:id="@+id/cbIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="20dp"
+            android:checkedButton="@+id/cb_w1"
+            android:clickable="false"
+            android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/btnAbout"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_alignParentRight="true"
-        android:layout_margin="10dp"
-        android:background="#ccc"
-        android:padding="2dp"
-        android:src="@android:drawable/ic_dialog_info" />
-</RelativeLayout>
+            <RadioButton
+                android:id="@+id/cb_w1"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/tutorial_indicator"
+                android:button="@null"
+                android:clickable="false" />
+
+            <RadioButton
+                android:id="@+id/cb_w2"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/tutorial_indicator"
+                android:button="@null"
+                android:clickable="false" />
+
+            <RadioButton
+                android:id="@+id/cb_w3"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/tutorial_indicator"
+                android:button="@null"
+                android:clickable="false" />
+
+            <RadioButton
+                android:id="@+id/cb_w4"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:background="@drawable/tutorial_indicator"
+                android:button="@null"
+                android:clickable="false" />
+        </RadioGroup>
+    </RelativeLayout>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:theme="@style/AppTheme.PopupOverlay" />
+</android.support.design.widget.CoordinatorLayout>

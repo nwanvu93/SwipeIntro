@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="library-2.1.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/se.emilsjolander.stickylistheaders/library/2.1.0/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/se.emilsjolander.stickylistheaders/library/2.1.0/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/se.emilsjolander.stickylistheaders/library/2.1.0/822fb6e17c226f63294c03eb4759b24c74e7d582/library-2.1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

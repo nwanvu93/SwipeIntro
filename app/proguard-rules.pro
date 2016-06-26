@@ -15,3 +15,9 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-keep class android.support.** { *; }
+-dontwarn android.support.**
+-keep class com.google.** { *; }
+-dontwarn com.google.**
+-keep class okio.** { *; }
+-dontwarn okio.**
