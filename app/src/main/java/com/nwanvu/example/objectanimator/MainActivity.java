@@ -3,17 +3,27 @@ package com.nwanvu.example.objectanimator;
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
-import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
-public class MainActivity extends Activity implements View.OnTouchListener{
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
+public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
 
     private static final float MIN_VELOCITY = 200;
     int currentPage = 1;
@@ -25,10 +35,15 @@ public class MainActivity extends Activity implements View.OnTouchListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         findView();
 
 		/*
-		 * tutorial page 1
+         * tutorial page 1
 		 */
         w1_img1_in = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.w1_img1_in);
         w1_img1_in.setTarget(findViewById(R.id.phone1));
@@ -101,7 +116,7 @@ public class MainActivity extends Activity implements View.OnTouchListener{
         // w1_ttl_container_out.addListener(new MyAnimatorListener("w1_ttl_container_out"));
 
 		/*
-		 * tutorial page 2
+         * tutorial page 2
 		 */
         w2_img1_in = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.m2_img1_in);
         w2_img1_in.setTarget(findViewById(R.id.w2_img1));
@@ -123,13 +138,6 @@ public class MainActivity extends Activity implements View.OnTouchListener{
         w2_img3_out.setTarget(findViewById(R.id.w2_img3));
 
         // w2_img3_out.addListener(new MyAnimatorListener("w2_img3_out"));
-
-        w2_img4_in = w2_img1_in.clone();
-        w2_img4_in.setTarget(findViewById(R.id.w2_img4));
-        w2_img4_out = w2_img1_out.clone();
-        w2_img4_out.setTarget(findViewById(R.id.w2_img4));
-        // w2_img4_in.addListener(new MyAnimatorListener("w2_img4_in"));
-        // w2_img4_out.addListener(new MyAnimatorListener("w2_img4_out"));
 
         w2_ttl01_in = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.m2_ttl01_in);
         w2_ttl01_in.setTarget(findViewById(R.id.w2_ttl01));
@@ -153,7 +161,7 @@ public class MainActivity extends Activity implements View.OnTouchListener{
         // w2_ttl_container_out.addListener(new MyAnimatorListener("w2_ttl_container_out"));
 
 		/*
-		 * tutorial page 3
+         * tutorial page 3
 		 */
         w3_img1_in = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.w3_img1_in);
         w3_img1_in.setTarget(findViewById(R.id.t3_img01));
@@ -233,7 +241,7 @@ public class MainActivity extends Activity implements View.OnTouchListener{
         // w3_ttl_container_out.addListener(new MyAnimatorListener("w3_ttl_container_out"));
 
 		/*
-		 * tutorial page 4
+         * tutorial page 4
 		 */
         w4_img1_in = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.w4_img1_in);
         w4_img1_in.setTarget(findViewById(R.id.m4_img1));
@@ -305,17 +313,21 @@ public class MainActivity extends Activity implements View.OnTouchListener{
         // w4_fade_in_indicator.addListener(new MyAnimatorListener("w4_fade_in_indicator"));
         // w4_fade_out_indicator.addListener(new MyAnimatorListener("w4_fade_out_indicator"));
 
+        View explore = findViewById(R.id.woman_ani_4_button);
         w4_btn_in = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.w4_btn_in);
-        w4_btn_in.setTarget(findViewById(R.id.woman_ani_4_button));
+        w4_btn_in.setTarget(explore);
         w4_btn_out = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.w4_btn_out);
-        w4_btn_out.setTarget(findViewById(R.id.woman_ani_4_button));
-        // w4_btn_in.addListener(new MyAnimatorListener("w4_btn_in"));
-        // w4_btn_out.addListener(new MyAnimatorListener("w4_btn_out"));
+        w4_btn_out.setTarget(explore);
+        explore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requestNewInterstitial();
+            }
+        });
 
         /***
          * Start animation
          */
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -333,8 +345,25 @@ public class MainActivity extends Activity implements View.OnTouchListener{
         }, 100);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Get tracker.
+        Tracker t = App.getInstance().getTracker(
+        );
+
+        // Enable Advertising Features.
+        t.enableAdvertisingIdCollection(true);
+    }
+
     private void selectedPage(int page) {
         resetListener(page);
+
+        Tracker t = App.getInstance().getTracker();
+        // Set screen name.
+        t.setScreenName("PAGE: " + page);
+        // Send a screen view.
+        t.send(new HitBuilders.ScreenViewBuilder().build());
 
         if (page >= 1 && page <= 4) {
             RelativeLayout.LayoutParams layoutParams = (android.widget.RelativeLayout.LayoutParams) findViewById(R.id.touchView)
@@ -390,21 +419,21 @@ public class MainActivity extends Activity implements View.OnTouchListener{
         if (currentPage < page) {
             // next
             // 02-12 21:01:22.869: E/duy(15795): onAnimationEnd: w1_img7_in
-            w1_img7_in.addListener(new MyAnimatorListener("w1_img7_in"));
+            w1_img7_in.addListener(new MyAnimatorListener());
             // 02-12 21:01:43.817: E/duy(15795): onAnimationEnd: w2_img3_in
-            w2_img3_in.addListener(new MyAnimatorListener("w2_img3_in"));
+            w2_img3_in.addListener(new MyAnimatorListener());
             // 02-12 21:01:51.769: E/duy(15795): onAnimationEnd: w3_img8_in
-            w3_img8_in.addListener(new MyAnimatorListener("w3_img8_in"));
+            w3_img8_in.addListener(new MyAnimatorListener());
             // 02-12 21:02:04.649: E/duy(15795): onAnimationEnd: w4_ttl02_in
-            w4_btn_in.addListener(new MyAnimatorListener("w4_btn_in"));
+            w4_btn_in.addListener(new MyAnimatorListener());
         } else {
             // back
             // 02-12 21:02:25.217: E/duy(15795): onAnimationEnd: w3_img8_in
-            w3_img8_in.addListener(new MyAnimatorListener("w3_img8_in"));
+            w3_img8_in.addListener(new MyAnimatorListener());
             // 02-12 21:02:39.653: E/duy(15795): onAnimationEnd: w2_img3_in
-            w2_img3_in.addListener(new MyAnimatorListener("w2_img3_in"));
+            w2_img3_in.addListener(new MyAnimatorListener());
             // 02-12 21:02:47.749: E/duy(15795): onAnimationEnd: w1_img7_in
-            w1_img7_in.addListener(new MyAnimatorListener("w1_img7_in"));
+            w1_img7_in.addListener(new MyAnimatorListener());
             w4_btn_in.removeAllListeners();
         }
     }
@@ -455,12 +484,44 @@ public class MainActivity extends Activity implements View.OnTouchListener{
         return super.onTouchEvent(event);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.info_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_gift:
+                requestNewInterstitial();
+                break;
+            case R.id.action_rating:
+                String appPackageName = getPackageName();
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri
+                            .parse("market://details?id=" + appPackageName)));
+                } catch (android.content.ActivityNotFoundException e) {
+                    startActivity(new Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("http://play.google.com/store/apps/details?id="
+                                    + appPackageName)));
+                }
+                return true;
+            case R.id.action_more_app:
+                startActivity(new Intent(this, MoreAppActivity.class));
+                return true;
+            case R.id.action_github:
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.source_url))));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+
     class MyAnimatorListener implements Animator.AnimatorListener {
 
-        private String pos;
-
-        public MyAnimatorListener(String pos) {
-            this.pos = pos;
+        public MyAnimatorListener() {
         }
 
         @Override
@@ -503,7 +564,6 @@ public class MainActivity extends Activity implements View.OnTouchListener{
                 w2_img1_in.start();
                 w2_img2_in.start();
                 w2_img3_in.start();
-                w2_img4_in.start();
                 w2_ttl01_in.start();
                 w2_ttl02_in.start();
                 break;
@@ -554,7 +614,6 @@ public class MainActivity extends Activity implements View.OnTouchListener{
                 w2_img1_out.start();
                 w2_img2_out.start();
                 w2_img3_out.start();
-                w2_img4_out.start();
                 w2_ttl01_out.start();
                 w2_ttl02_out.start();
                 // w2_ttl_container_out.start();
@@ -591,10 +650,21 @@ public class MainActivity extends Activity implements View.OnTouchListener{
     private void findView() {
         cbIndicator = (RadioGroup) findViewById(R.id.cbIndicator);
         findViewById(R.id.touchView).setOnTouchListener(this);
-        findViewById(R.id.btnAbout).setOnClickListener(new View.OnClickListener() {
+    }
+
+    private void requestNewInterstitial() {
+        final InterstitialAd mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-7209317417366395/6753504265");
+        AdRequest.Builder adRequest = new AdRequest.Builder();
+        String[] stringArray = getResources().getStringArray(R.array.device_ids);
+        for (String id : stringArray) {
+            adRequest.addTestDevice(id);
+        }
+        mInterstitialAd.loadAd(adRequest.build());
+        mInterstitialAd.setAdListener(new AdListener() {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, AboutActivity.class));
+            public void onAdLoaded() {
+                mInterstitialAd.show();
             }
         });
     }
@@ -658,8 +728,6 @@ public class MainActivity extends Activity implements View.OnTouchListener{
     private AnimatorSet w2_img3_out;
     private AnimatorSet w2_ttl01_out;
     private AnimatorSet w2_ttl02_out;
-    private AnimatorSet w2_img4_in;
-    private AnimatorSet w2_img4_out;
     private Animator w2_ttl_container_out;
 
     private Animator w3_img1_out;

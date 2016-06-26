@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="device_ids">
+        <item>3F5FD39C8451BA21C3E3100EE39AB5CA</item>
+        <item>A21B335DE6DCE7233ED424DBE2B352BB</item>
+    </string-array>
+</resources>

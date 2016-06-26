@@ -132,7 +132,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/t3_ttlContainer"
-        android:layout_marginBottom="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="16dp"
@@ -145,16 +144,7 @@
 
     <TextView
         android:id="@+id/t3_ttl02"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/text_description"
         android:layout_below="@+id/t3_ttl01"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:textSize="26sp"
-        android:maxLines="3"
-        android:ellipsize="end"
-        android:alpha="0"
-        android:gravity="center"
-        android:textColor="@android:color/white"
-        android:text="@string/m2_text_1"/>
+        android:text="@string/m2_text_1" />
 </RelativeLayout>
