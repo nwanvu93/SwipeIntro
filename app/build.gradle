@@ -1,28 +1,28 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24"
-
+    compileSdk 34
+    namespace 'com.nwanvu.example.objectanimator'
     defaultConfig {
         applicationId "com.nwanvu.example.objectanimator"
-        minSdkVersion 11
-        targetSdkVersion 24
-        versionCode 3
-        versionName "1.0.2"
-        resConfigs("en")
+        minSdkVersion 26
+        targetSdkVersion 34
+        versionCode 4
+        versionName "1.0.3"
+        resourceConfigurations += ['en']
         archivesBaseName = rootProject.name + "_v" + versionCode + "_" + versionName
+    }
+    buildFeatures {
+        buildConfig true
     }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:design:24.0.0'
-    compile 'com.google.android.gms:play-services-ads:9.0.2'
-    compile 'com.google.android.gms:play-services-analytics:9.0.2'
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.squareup.okhttp:okhttp:2.5.0'
-    compile 'se.emilsjolander.stickylistheaders:library:2.1.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:design:28.0.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.squareup.okhttp:okhttp:2.5.0'
+    implementation 'se.emilsjolander.stickylistheaders:library:2.1.0'
 }
 
 

@@ -11,9 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.nwanvu.example.objectanimator.adapter.AppItemAdapter;
 import com.nwanvu.example.objectanimator.classes.Util;
 import com.nwanvu.example.objectanimator.entities.AppItem;
@@ -54,45 +51,6 @@ public class MoreAppActivity extends AppCompatActivity implements AdapterView.On
 
         loadAppList = new LoadAppList();
         loadAppList.execute();
-        try {
-            final AdView adView = (AdView) findViewById(R.id.adViewMore);
-            AdRequest.Builder adRequest = new AdRequest.Builder()
-                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR);
-            String[] stringArray = getResources().getStringArray(R.array.device_ids);
-            for (String id : stringArray) {
-                adRequest.addTestDevice(id);
-            }
-            adView.loadAd(adRequest.build());
-            adView.setAdListener(new AdListener() {
-                @Override
-                public void onAdClosed() {
-                    super.onAdClosed();
-                }
-
-                @Override
-                public void onAdFailedToLoad(int errorCode) {
-                    adView.setVisibility(View.GONE);
-                    super.onAdFailedToLoad(errorCode);
-                }
-
-                @Override
-                public void onAdLeftApplication() {
-                    super.onAdLeftApplication();
-                }
-
-                @Override
-                public void onAdOpened() {
-                    super.onAdOpened();
-                }
-
-                @Override
-                public void onAdLoaded() {
-                    super.onAdLoaded();
-                    adView.setVisibility(View.VISIBLE);
-                }
-            });
-        } catch (Exception ignored) {
-        }
     }
 
     @Override
@@ -101,7 +59,7 @@ public class MoreAppActivity extends AppCompatActivity implements AdapterView.On
         try {
             startActivity(new Intent(Intent.ACTION_VIEW, Uri
                     .parse("market://details?id=" + appPackageName)));
-        } catch (android.content.ActivityNotFoundException anfe) {
+        } catch (android.content.ActivityNotFoundException e) {
             startActivity(new Intent(
                     Intent.ACTION_VIEW,
                     Uri.parse("http://play.google.com/store/apps/details?id="
@@ -123,21 +81,20 @@ public class MoreAppActivity extends AppCompatActivity implements AdapterView.On
             try {
                 String json = Util.callGetApi(getString(R.string.more_app_url));
                 ArrayList<AppItem> appItems = new ArrayList<>();
-                JSONObject appsObj = new JSONObject(json.replace("\t", ""));
-                JSONArray jsonArray = appsObj.getJSONArray("apps");
+                JSONArray jsonArray = new JSONArray(json);
                 for (int i = 0; i < jsonArray.length(); i++) {
                     AppItem app = new AppItem();
                     JSONObject obj = jsonArray.getJSONObject(i);
-                    if (!obj.isNull("appname"))
-                        app.setAppName(obj.getString("appname"));
-                    if (!obj.isNull("appid"))
-                        app.setAppId(obj.getString("appid"));
-                    if (!obj.isNull("appicon"))
-                        app.setAppIcon(obj.getString("appicon"));
-                    if (!obj.isNull("apprating"))
-                        app.setAppRating(obj.getDouble("apprating"));
-                    if (!obj.isNull("appauthor"))
-                        app.setAppAuthor(obj.getString("appauthor"));
+                    if (!obj.isNull("name"))
+                        app.setAppName(obj.getString("name"));
+                    if (!obj.isNull("id"))
+                        app.setAppId(obj.getString("id"));
+                    if (!obj.isNull("icon"))
+                        app.setAppIcon(obj.getString("icon"));
+                    if (!obj.isNull("rating"))
+                        app.setAppRating(obj.getDouble("rating"));
+                    if (!obj.isNull("author"))
+                        app.setAppAuthor(obj.getString("author"));
 
                     if (!app.getAppId().equals(getPackageName()))
                         appItems.add(app);
@@ -153,7 +110,7 @@ public class MoreAppActivity extends AppCompatActivity implements AdapterView.On
         protected void onPostExecute(ArrayList<AppItem> appItemsResult) {
             super.onPostExecute(appItemsResult);
             pbloading.setVisibility(View.GONE);
-            if (appItemsResult == null || appItemsResult.size() == 0) {
+            if (appItemsResult == null || appItemsResult.isEmpty()) {
                 return;
             }
             appItemAdapter.setData(appItemsResult);
@@ -163,10 +120,8 @@ public class MoreAppActivity extends AppCompatActivity implements AdapterView.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                break;
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }

@@ -4,7 +4,7 @@
     <string name="app_name">ObjectAnimator Example</string>
     <string name="nwanvu">nwanvu</string>
     <string name="source_url">https://github.com/nwanvu93/ObjectAnimator-Example</string>
-    <string name="more_app_url">https://gist.githubusercontent.com/nwanvu93/a11be629e6292ee45e33b3ba4e7122c9/raw/59d97d45a30d8c7642e586bf3ba949f94951250e/moreapps.json</string>
+    <string name="more_app_url">https://nwanvu-e8d6a.firebaseio.com/moreapps.json</string>
 
     <string name="explore">EXPLORE</string>
 

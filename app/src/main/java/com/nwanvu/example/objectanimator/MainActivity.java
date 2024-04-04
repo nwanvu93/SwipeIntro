@@ -17,12 +17,6 @@ import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
 
     private static final float MIN_VELOCITY = 200;
@@ -37,14 +31,13 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null)
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        if (getSupportActionBar() != null) getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         findView();
 
-		/*
+        /*
          * tutorial page 1
-		 */
+         */
         w1_img1_in = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.w1_img1_in);
         w1_img1_in.setTarget(findViewById(R.id.phone1));
         w1_img1_out = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.w1_img1_out);
@@ -115,9 +108,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         // w1_ttl_container_in.addListener(new MyAnimatorListener("w1_ttl_container_in"));
         // w1_ttl_container_out.addListener(new MyAnimatorListener("w1_ttl_container_out"));
 
-		/*
+        /*
          * tutorial page 2
-		 */
+         */
         w2_img1_in = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.m2_img1_in);
         w2_img1_in.setTarget(findViewById(R.id.w2_img1));
         w2_img1_out = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.m2_img1_out);
@@ -160,9 +153,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         // w2_ttl_container_in.addListener(new MyAnimatorListener("w2_ttl_container_in"));
         // w2_ttl_container_out.addListener(new MyAnimatorListener("w2_ttl_container_out"));
 
-		/*
+        /*
          * tutorial page 3
-		 */
+         */
         w3_img1_in = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.w3_img1_in);
         w3_img1_in.setTarget(findViewById(R.id.t3_img01));
         w3_img1_out = AnimatorInflater.loadAnimator(this, R.animator.w3_img1_out);
@@ -240,9 +233,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         // w3_ttl_container_in.addListener(new MyAnimatorListener("w3_ttl_container_in"));
         // w3_ttl_container_out.addListener(new MyAnimatorListener("w3_ttl_container_out"));
 
-		/*
+        /*
          * tutorial page 4
-		 */
+         */
         w4_img1_in = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.w4_img1_in);
         w4_img1_in.setTarget(findViewById(R.id.m4_img1));
         w4_img1_out = AnimatorInflater.loadAnimator(this, R.animator.w4_img1_out);
@@ -318,56 +311,26 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         w4_btn_in.setTarget(explore);
         w4_btn_out = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.w4_btn_out);
         w4_btn_out.setTarget(explore);
-        explore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                requestNewInterstitial();
-            }
-        });
 
-        /***
-         * Start animation
-         */
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                w1_img1_in.start();
-                w1_img2_in.start();
-                w1_img3_in.start();
-                w1_img4_in.start();
-                w1_img5_in.start();
-                w1_img6_in.start();
-                w1_img7_in.start();
-                w1_ttl01_in.start();
-                w1_ttl02_in.start();
-                cbIndicator.check(R.id.cb_w1);
-            }
+        new Handler().postDelayed(() -> {
+            w1_img1_in.start();
+            w1_img2_in.start();
+            w1_img3_in.start();
+            w1_img4_in.start();
+            w1_img5_in.start();
+            w1_img6_in.start();
+            w1_img7_in.start();
+            w1_ttl01_in.start();
+            w1_ttl02_in.start();
+            cbIndicator.check(R.id.cb_w1);
         }, 100);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        // Get tracker.
-        Tracker t = App.getInstance().getTracker(
-        );
-
-        // Enable Advertising Features.
-        t.enableAdvertisingIdCollection(true);
     }
 
     private void selectedPage(int page) {
         resetListener(page);
 
-        Tracker t = App.getInstance().getTracker();
-        // Set screen name.
-        t.setScreenName("PAGE: " + page);
-        // Send a screen view.
-        t.send(new HitBuilders.ScreenViewBuilder().build());
-
         if (page >= 1 && page <= 4) {
-            RelativeLayout.LayoutParams layoutParams = (android.widget.RelativeLayout.LayoutParams) findViewById(R.id.touchView)
-                    .getLayoutParams();
+            RelativeLayout.LayoutParams layoutParams = (android.widget.RelativeLayout.LayoutParams) findViewById(R.id.touchView).getLayoutParams();
             if (page == 4) {
                 layoutParams.setMargins(0, 0, 0, (int) getResources().getDimension(R.dimen.touch_view_margin_bottom));
             } else {
@@ -492,28 +455,17 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_gift:
-                requestNewInterstitial();
-                break;
-            case R.id.action_rating:
-                String appPackageName = getPackageName();
-                try {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri
-                            .parse("market://details?id=" + appPackageName)));
-                } catch (android.content.ActivityNotFoundException e) {
-                    startActivity(new Intent(
-                            Intent.ACTION_VIEW,
-                            Uri.parse("http://play.google.com/store/apps/details?id="
-                                    + appPackageName)));
-                }
-                return true;
-            case R.id.action_more_app:
-                startActivity(new Intent(this, MoreAppActivity.class));
-                return true;
-            case R.id.action_github:
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.source_url))));
-                break;
+        if (item.getItemId() == R.id.action_rating) {
+            String appPackageName = getPackageName();
+            try {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+            } catch (android.content.ActivityNotFoundException e) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + appPackageName)));
+            }
+        } else if (item.getItemId() == R.id.action_more_app) {
+            startActivity(new Intent(this, MoreAppActivity.class));
+        } else if (item.getItemId() == R.id.action_github) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.source_url))));
         }
         return super.onOptionsItemSelected(item);
 
@@ -650,23 +602,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     private void findView() {
         cbIndicator = (RadioGroup) findViewById(R.id.cbIndicator);
         findViewById(R.id.touchView).setOnTouchListener(this);
-    }
-
-    private void requestNewInterstitial() {
-        final InterstitialAd mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-7209317417366395/6753504265");
-        AdRequest.Builder adRequest = new AdRequest.Builder();
-        String[] stringArray = getResources().getStringArray(R.array.device_ids);
-        for (String id : stringArray) {
-            adRequest.addTestDevice(id);
-        }
-        mInterstitialAd.loadAd(adRequest.build());
-        mInterstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                mInterstitialAd.show();
-            }
-        });
     }
 
     private AnimatorSet w1_img3_in;

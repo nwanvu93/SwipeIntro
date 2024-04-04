@@ -42,7 +42,7 @@ public class AppItemAdapter extends BaseAdapter implements
             view.setTag(holder);
         } else holder = (ViewHolder) view.getTag();
 
-        Picasso.with(context).load(appItems.get(i).getAppIcon())
+        Picasso.get().load(appItems.get(i).getAppIcon())
                 .placeholder(R.drawable.loading)
                 .error(R.drawable.loading)
                 .into(holder.appIcon);

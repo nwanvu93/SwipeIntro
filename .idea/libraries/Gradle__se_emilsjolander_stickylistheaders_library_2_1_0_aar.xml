@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: se.emilsjolander.stickylistheaders:library:2.1.0@aar" external-system-id="GRADLE">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/f6b6404a2c387289879e8d29796fa0a9/transformed/library-2.1.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/f6b6404a2c387289879e8d29796fa0a9/transformed/library-2.1.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/f6b6404a2c387289879e8d29796fa0a9/transformed/library-2.1.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/se.emilsjolander.stickylistheaders/library/2.1.0/3ab34f264552ca9b097354ee292d5418371b64c2/library-2.1.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/se.emilsjolander.stickylistheaders/library/2.1.0/822fb6e17c226f63294c03eb4759b24c74e7d582/library-2.1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

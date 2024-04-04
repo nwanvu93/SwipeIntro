@@ -2,11 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_gift"
-        android:icon="@mipmap/ic_action_gift"
-        android:title="@string/action_gift"
-        app:showAsAction="ifRoom" />
-    <item
         android:id="@+id/action_github"
         android:icon="@mipmap/ic_action_github"
         android:title="@string/action_github"

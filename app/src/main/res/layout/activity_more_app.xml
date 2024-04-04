@@ -1,5 +1,4 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -7,7 +6,6 @@
         android:id="@+id/appListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/adViewMore"
         android:drawSelectorOnTop="true" />
 
     <TextView
@@ -25,15 +23,5 @@
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_centerInParent="true" />
-
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adViewMore"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="#000"
-        android:visibility="gone"
-        ads:adSize="SMART_BANNER"
-        ads:adUnitId="ca-app-pub-7209317417366395/3973967061" />
 
 </RelativeLayout>
